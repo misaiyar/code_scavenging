@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> 图片上传预览 | TEST </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    
+    <link href="./img.css?v=1.1" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <form method="post" enctype="multipart/form-data">
+      <div class="upload-list">
+          <span class="tag">点击添加</span>
+          <input name="pic2" type="file" update="" class="upload-btn J-upload" accept="image/gif,image/jpeg,image/jpg,image/png">
+          <img class="upload-pics" title="already upload images" src="">
+          <label> Upload Notice </label>
+          <div class="mask J-picMask"><div class="delete J-picDelete"></div></div>
+      </div>
+    </form>
+    <script src="./jQuery-2.2.0.min.js"></script>
+    <script src="./auxiliary.min.js"></script>
+    <script src="./exif.min.js"></script>
+    <script>
+      $(function(){
+        $("form").on("change",".J-upload", function(event) {
+                var file = event.target.files[0],
+                        _this = this;
+                if (!/\/(?:jpeg|png|jpg)/i.test(file.type)) return;
+                //压缩和旋转图片
+                compress(file, {
+                        maxWidth: 800,
+                        maxHeight: 800,
+                        quality: .6,
+                        type: 'jpeg'
+                }, function(dataUrl) {
+                        $(_this)
+                                .next().attr("src", dataUrl)
+                                .siblings('.J-picMask').show()
+                                .parent().removeClass('error');
+                })
+            });
+          });
+    </script>
+  </body>
+</html>
