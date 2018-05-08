@@ -323,4 +323,19 @@ class Tools{
 
         return $strcut . $dot;
     }
+    /**
+    *redis 集群键分配算法，与16384取余，获得所在的槽
+    */
+    public function crc16($string) {
+      $crc = 0xFFFF;
+      for ($x = 0; $x < strlen ($string); $x++) {
+        $crc = $crc ^ ord($string[$x]);
+        for ($y = 0; $y < 8; $y++) {
+          if (($crc & 0x0001) == 0x0001) {
+            $crc = (($crc >> 1) ^ 0xA001);
+          } else { $crc = $crc >> 1; }
+        }
+      }
+      return $crc;
+    }
 }
