@@ -27,7 +27,7 @@
         $("form").on("change",".J-upload", function(event) {
                 var file = event.target.files[0],
                         _this = this;
-                if (!/\/(?:jpeg|png|jpg)/i.test(file.type)) return;
+                if (!/\/(?:jpeg|png|jpg|gif)/i.test(file.type)) return;
                 //压缩和旋转图片
                 compress(file, {
                         maxWidth: 800,
