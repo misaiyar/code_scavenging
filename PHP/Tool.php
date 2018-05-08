@@ -3,7 +3,7 @@
  * 工具类
  *
  */
-class Tools{
+class Tool{
     
     /**
      * 给图片打水印
