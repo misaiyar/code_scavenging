@@ -1,3 +1,5 @@
+<?php
+
 class ExcelTool{
     public static function downloadXlsx($title,$tablehead,$data,$sub_title=[]) {
         $objPHPExcel = new \PHPExcel();
