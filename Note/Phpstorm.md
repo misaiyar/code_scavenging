@@ -1,0 +1,3 @@
+1.修改查询100+限制    
+①Help>Edit Custom Properties...    
+②添加内容(设置查询上限为500): ide.usages.page.size=500 
