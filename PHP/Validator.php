@@ -7,34 +7,6 @@
  * @link vendor/laravel/framework/src/Illuminate/Validation/Concerns/ValidatesAttributes.php
  */
 
-/*
-
-$data = false;
-$validator = Validator::make($param,[
-	'test'=>'json2array',
-    'android_download_url'=>'min:1',
-    'initial_times'=>'required|numeric|between:3,5',
-    'initial_type'=>'required|numeric|max:127',
-    'begin_time'=>'date',
-    'end_time' =>'date|after_or_equal:begin_time',
-    'pwd'=>'min:10|max:16|confirmed',
-    'testa'=>[ function($key,$value,$object) use ($data) {
-	    	$object->current_args = ['fh'=>'sdfsfs'];
-			return $data;
-	    } ]
-],[
-	'between'=>' :attribute in :min to :max',
-	'testa.0'=>' :attribute kfhdskf :fh'
-]);
-if( $validator->fails() ){
-    print_r($validator->failed());
-}else{
-	print_r($validator->validated());
-	echo 'OK !',PHP_EOL;
-}
-
-*/
-
 namespace App\Utility;
 
 
@@ -144,7 +116,7 @@ class Validator{
         $this->error_msg = array_merge($this->error_msg,$msg);
     }
 
-    public static function make(array $data,array $rules,$msg){
+    public static function make(array $data,array $rules,$msg=[]){
         if( !self::$instance ){
             self::$instance = new self();
         }
@@ -161,7 +133,7 @@ class Validator{
     }
 
     public function passed(){
-        if( empty($this->current_rules) || empty($this->current_data) ){
+        if( empty($this->current_rules) ){
             return $this->current_error;
         }
         foreach ($this->current_rules as $_key=>$_rule){
@@ -439,7 +411,7 @@ class Validator{
     private function size($value){
         if( is_array($value) ){
             return count($value);
-        }else if( $this->is_realnumber($value) ){
+        }else if( $this->is_realnumber($value) && $this->hasRule($this->numericRules) ){
             return $value + 0;
         }else{
             return mb_strlen($value);
@@ -472,5 +444,15 @@ class Validator{
             $replace[] = $_value?:'';
         }
         return str_replace($search, $replace, $msg);
+    }
+
+    private function hasRule( $rules ){
+        $_rules = $this->current_rules[$this->current_key];
+        if( is_array($_rules) ){
+            $mix = array_intersect($_rules,$rules);
+            return !empty($mix);
+        }else{
+            return preg_match('/(^|\|)\s*('.implode('|',(array)$rules).')\s*(:|$|\|)/is',$_rules);
+        }
     }
 }
