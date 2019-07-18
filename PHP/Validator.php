@@ -6,6 +6,31 @@
  * Time: 15:24
  * @link vendor/laravel/framework/src/Illuminate/Validation/Concerns/ValidatesAttributes.php
  */
+/*
+$data = false;
+$validator = Validator::make($param,[
+	'test'=>'json2array',
+    'android_download_url'=>'min:1',
+    'initial_times'=>'required|numeric|between:3,5',
+    'initial_type'=>'required|numeric|max:127',
+    'begin_time'=>'date',
+    'end_time' =>'date|after_or_equal:begin_time',
+    'pwd'=>'min:10|max:16|confirmed',
+    'testa'=>[ function($key,$value,$object) use ($data) {
+	    	$object->current_args = ['fh'=>'sdfsfs'];
+			return $data;
+	    } ]
+],[
+	'between'=>' :attribute in :min to :max',
+	'testa.0'=>' :attribute kfhdskf :fh'
+]);
+if( $validator->fails() ){
+    print_r($validator->failed());
+}else{
+	print_r($validator->validated());
+	echo 'OK !',PHP_EOL;
+}
+*/
 
 namespace App\Utility;
 
